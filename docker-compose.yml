@@ -1,13 +1,18 @@
 version: '2'
 services:
+  brickscraper:
+    image: snakehead007/brickscraper
+    links:
+    - "match:images"
   match:
     image: dsys/match:latest
     ports:
-    - 127.0.0.1:8888:8888
-    command: ["/wait-for-it.sh", "-t", "60", "elasticsearch:9200", "--", "gunicorn", "-b", "0.0.0.0:8888", "-w", "4", "server:app"]
-    links:
-    - elasticsearch
+    - 8888:8888
+    command: ["/wait-for-it.sh", "-t", "60", "elasticsearch:9200", "--", "gunicorn", "-b", "0.0.0.0:8888", "-w", "4">
   elasticsearch:
     image: elasticsearch:6.4.2
     ports:
-    - 127.0.0.1:9200:9200
+    - 9200:9200
+networks:
+  network:
+    driver: bridge
