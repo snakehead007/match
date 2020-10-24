@@ -4,6 +4,9 @@ services:
     image: snakehead007/brickscraper
     links:
     - "match:images"
+    - rembg
+    volumes:
+        - /home/karel/docker/brickscraper:/img
   match:
     image: dsys/match:latest
     ports:
@@ -13,6 +16,10 @@ services:
     image: elasticsearch:6.4.2
     ports:
     - 9200:9200
+  rembg:
+    image: snakehead007/rembg-docker:latest
+    ports:
+    - 127.0.0.1:5000:5000
 networks:
   network:
     driver: bridge
