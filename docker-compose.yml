@@ -37,3 +37,4 @@ services:
       - main
 networks:
   main:
+    driver: bridge
