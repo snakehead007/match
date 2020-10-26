@@ -5,8 +5,6 @@ services:
     links:
     - "match:images"
     - "rembg:rembg"
-    volumes:
-        - /home/karel/docker/brickscraper:/img
   match:
     image: dsys/match:latest
     ports:
