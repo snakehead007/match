@@ -1,24 +1,39 @@
-version: '2'
+version: '3.8'
 services:
   brickscraper:
     image: snakehead007/brickscraper
     hostname: brickscraper
+    deploy:
+      replicas: 1
+    networks:
+      - main
   match:
     image: dsys/match:latest
     hostname: match
     ports:
     - 8888:8888
     command: ["/wait-for-it.sh", "-t", "60", "elasticsearch:9200", "--", "gunicorn", "-b", "0.0.0.0:8888", "-w", "4", "server:app"]
+    deploy:
+      replicas: 4
+    networks:
+      - main
   elasticsearch:
     image: elasticsearch:6.4.2
     hostname: elasticsearch
     ports:
     - 9200:9200
+    deploy:
+      replicas: 4
+    networks:
+      - main
   rembg:
     image: snakehead007/rembg-docker:latest
     hostname: rembg
     ports:
     - 5000:5000
+    deploy:
+      replicas: 4
+    networks:
+      - main
 networks:
-  default:
-    driver: network
+  main:
